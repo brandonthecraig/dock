@@ -22,7 +22,8 @@ describe ('Ship', function() {
     })
     
     // As the ship is setting sale getCurrentPort is falsy as the ship isn't at a port
-    it('Can set sail from the port', function(){
+    it('Can set sail from the port if the weather is not stormy', function(){
+        spyOn(weather,'isStormy').and.returnValue(false);
         ship.setSail();
 
         expect(ship.getCurrentPort()).toBeFalsy();
@@ -40,8 +41,27 @@ describe ('Ship', function() {
     it('Does not set sail in stormy weather', function(){
         spyOn(weather,'isStormy').and.returnValue(false);
 
-        ship.setSail():
+        ship.setSail();
 
         expect(ship.getCurrentPort()).toBeFalsy();
-    }) 
+    })
+    
+    it('instructs the Port to add the ship', function(){
+        spyOn(arrivalPort, 'addShip');
+
+        ship.dock(arrivalPort);
+
+        expect(arrivalPort.addShip).toHaveBeenCalledWith(ship)
+    })
+
+    it('doesn"t dock if port at capacity', function(){
+        spyOn(arrivalPort, 'addShip');
+        for (let i = 0; i < 8; i++) {
+            
+            ship.dock(arrivalPort);
+        }
+        expect(function () {
+            ship.dock(arrivalPort);
+          }).toThrowError('port is at capacity')
+    })
     });

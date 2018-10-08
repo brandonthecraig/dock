@@ -1,7 +1,7 @@
 // Created a ship prototype
 Ship.prototype = {
     getCurrentPort: function(){
-        return _currentPort
+        return this._currentPort
     },
     // Created a setSail function
     setSail: function(){
@@ -13,13 +13,20 @@ Ship.prototype = {
         this._currentPort = null;
     },
     // Created a dock function
-    dock: function(arrivalPort){
-        _currentPort = arrivalPort
+    dock: function(port){
+        if (port._getCapacity > port._ships.length){
+            this._currentPort = port
+            port.addShip(this);
+        }
+        else {
+            throw new Error ("port is at capacity")
+        }
+        
     }
 }
 // Created a ship constructor
 function Ship(port){
-    _currentPort = port
+    this._currentPort = port
    
     
 }
