@@ -1,9 +1,11 @@
-//Creating a prototype
-Port.protoype = {
-
+//Creating a constructor
+function Port(weather) {
+    this._weather = weather;
 }
 
-//Creating a constructor
-function Port() {
-
+//Creating a prototype
+Port.prototype = {
+    getWeather: function(){
+        return this._weather;
+    }
 }

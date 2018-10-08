@@ -3,12 +3,14 @@ describe ('Ship', function() {
     let port;
     let ship;
     let arrivalPort;
+    let weather;
 
-// Declaring we have a new port, ship, arrivalPor (new objects).
+// Declaring we have a new port, ship, arrivalPort (new objects).
     beforeEach(function() {
-        port = new Port();
+        port = new Port(weather);
         ship = new Ship(port);
         arrivalPort = new Port();
+        weather = new Weather();
 
     });
 
@@ -35,4 +37,11 @@ describe ('Ship', function() {
 
     })
 
+    it('Does not set sail in stormy weather', function(){
+        spyOn(weather,'isStormy').and.returnValue(false);
+
+        ship.setSail():
+
+        expect(ship.getCurrentPort()).toBeFalsy();
+    }) 
     });
